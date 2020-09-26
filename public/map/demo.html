@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>百度地图</title>
+	<link href="style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript"src="https://api.map.baidu.com/api?v=2.0&ak=2COzFaICuIyVj7V3VetKfmdRVnX8BhVr"></script>
+</head>
+<body>
+<div class="w1150">
+    <div class="video-wrapper" >
+        <div class="map-top clearfix">
+            <div class="location-cur-pos js-cur-position">
+                <span class="location-col-red" id="location-name">【重庆】</span> 附近共有<span class="location-col-red" id="store-num">3</span>个试驾网点</div>
+            <div class="location-section form-section js-location-select clearfix">
+                <div class="xm-select" style="float: left;">
+                    <div class="dropdown">
+                        <label class="iconfont" for="city">∨</label>
+                        <select id="province" class="js-province" name="addr_province">
+                            <option value="重庆市">重庆市</option>
+                            <option value="湖北省">武汉市</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="location-main">
+            <div class="fl location-shop-con">
+                <div class="location-shop-detail">
+                    <ul class="location-list js-store" id="store-list" style="width: 270px; height:250px;overflow: scroll">
+											
+                    </ul>
+                    <div class="xm-controls xm-controls-small js-pager-controls" page="1" style="float: left;">
+                    </div>
+                </div>
+            </div>
+            <div class="location-map">
+                <div id="container" style="width: 100%; height:100%; overflow: hidden; position: relative; z-index: 0; background-color: rgb(243, 241, 236); color: rgb(0, 0, 0); text-align:left;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+<script>
+    var map = new BMap.Map("container");          // 创建地图实例     // 初始化地图，设置中心点坐标和地图级别
+    map.centerAndZoom("重庆",10);   //设置中心点坐标和地图级别
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+    map.addControl(new BMap.NavigationControl()); //地图平移缩放控件
+    map.addControl(new BMap.ScaleControl());  //比例尺控件
+    map.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
+    map.addControl(new BMap.MapTypeControl()); //设置标注的图标
+    $(function(){ 
+			getNowPos();
+			var provinceName=$(this).val();  
+		getLocal("province="+provinceName); //省市下拉框查找网点
+		
+		//省市下拉框查找网点
+        /*$("#province").change(function(){
+            var provinceName=$(this).val();
+            $("#location-name").html("【"+provinceName+"】");
+            getLocal("province="+provinceName);
+        })*/
+		
+      //根据门店的名称查找网点
+       /* $("span.search-icon").click(function(){
+            var content=$("#search_box_input").val();
+            if(content==""){
+                alert("请输入线下销售网点的信息");
+                return false;
+            }
+            getLocal("content="+content);
+        })*/
+    });
+
+    //搜索框按键查询
+    $(document).keyup(function (e) {//捕获文档对象的按键弹起事件
+        if (e.keyCode == 13) {//按键信息对象以参数的形式传递进来了
+            //此处编写用户敲回车后的代码
+            $("span.search-icon").click();
+        }
+    });
+
+
+    function getNowPos(){ 
+//单纯的获取，不应用到地图上
+
+        var geolocation = new BMap.Geolocation();  
+        geolocation.getCurrentPosition(function(r){
+            if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                var mk = new BMap.Marker(r.point);
+                map.addOverlay(mk);//标出所在地
+                map.panTo(r.point);//地图中心移动
+                var point = new BMap.Point(r.point.lng,r.point.lat);//用所定位的经纬度查找所在地省市街道等信息
+                var gc = new BMap.Geocoder();
+                gc.getLocation(point, function(rs){
+                    var addComp = rs.addressComponents; //查询得到的地址对象组件
+                    $("#location-name").html("【"+addComp['province']+"】");
+                    $("#province option[value='"+addComp['province']+"']").attr("selected", true);
+                    getLocal("province="+addComp['province']);
+                });
+            }else {
+                alert('failed'+this.getStatus());
+            }
+        },{enableHighAccuracy: true})
+    }
+
+    var marker;
+    function getLocal(urlData){
+        //Ajax.call('/Marketing2.php?act=getlocal',urlData,returnToCartResponse,'POST', 'TEXT', true, true);
+        //function  returnToCartResponse(result){
+		    result=[{"id":"515","province":"\u91cd\u5e86\u5e02","area":"\u6e1d\u5317\u533a","shopname":"\u91cd\u5e86\u9ed1\u9a6c\u0034\u0073\u5e97","shopaddr":"\u91cd\u5e86\u5e02\u6e1d\u5317\u533a\u6995\u6749\u8def\u4e0e\u65b0\u6e89\u5927\u9053\u4ea4\u53c9\u8def\u53e3\u5317\u4fa7\u0028\u5929\u5de5\u592a\u9633\u5c9b\u0029","location":"106.54773779502868,29.40283889656061"},
+				{"id":"516","province":"\u91cd\u5e86\u5e02","area":"\u6e1d\u5317\u533a","shopname":"\u91cd\u5e86\u5b9d\u521b\u6c7d\u8f66\u9500\u552e\u670d\u52a1\u6709\u9650\u516c\u53f8","shopaddr":"\u000d\u000a\u91cd\u5e86\u5e02\u6e1d\u5317\u533a\u91d1\u5f00\u5927\u9053\u0031\u0035\u53f7","location":"106.53434,29.637134"},
+				{"id":"517","province":"\u91cd\u5e86\u5e02","area":"\u5357\u5cb8\u533a","shopname":"\u91cd\u5e86\u767e\u4e8b\u8fbe\u534e\u4f17\u6c7d\u8f66\u9500\u552e\u670d\u52a1\u6709\u9650\u516c\u53f8","shopaddr":"\u000d\u000a\u91cd\u5e86\u5e02\u5357\u5cb8\u533a\u5357\u6e56\u8def\u0031\u0032\u53f7","location":"106.56866,29.5175"},
+				{"id":"518","province":"\u91cd\u5e86\u5e02","area":"\u6e1d\u5317\u533a","shopname":"\u91cd\u5e86\u8fd0\u901a\u665f\u8fea\u6c7d\u8f66\u9500\u552e\u670d\u52a1\u6709\u9650\u516c\u53f8","shopaddr":"\u91cd\u5e86\u5e02\u6e1d\u5317\u533a\u91d1\u77f3\u5927\u9053\u0032\u0039\u0039\u53f7","location":"106.602348,29.648222"},
+				{"id":"519","province":"\u6e56\u5317\u7701","area":"\u6b66\u6c49\u5e02","shopname":"\u6b66\u6c49\u6052\u4fe1\u5de8\u661f\u6c7d\u8f66\u9500\u552e\u670d\u52a1\u6709\u9650\u516c\u53f8","shopaddr":"\u6e56\u5317\u7701\u6b66\u6c49\u5e02\u6c5f\u5cb8\u533a\u9ec4\u6d66\u79d1\u6280\u56ed\u7279\u0031\u0031\u53f7","location":"114.283249,30.628473"},	
+				{"id":"520","province":"\u6e56\u5317\u7701","area":"\u6b66\u6c49\u5e02","shopname":"\u6e56\u5317\u4e09\u73af\u8fb0\u901a\u6c7d\u8f66\u6709\u9650\u516c\u53f8","shopaddr":"\u6e56\u5317\u7701\u6b66\u6c49\u5e02\u6d2a\u5c71\u533a\u4e1c\u6e56\u65b0\u533a\u4e1c\u4fe1\u8def\u0032\u0038\u53f7","location":"114.43358,30.49899"},
+				
+				{"id":"521","province":"\u6e56\u5317\u7701","area":"\u6b66\u6c49\u5e02","shopname":"\u6e56\u5317\u7701\u4e1c\u5b89\u5de5\u8d38\u6709\u9650\u516c\u53f8","shopaddr":"\u000d\u000a\u6b66\u6c49\u5e02\u785a\u53e3\u533a\u5efa\u8bbe\u5927\u9053\u0033\u0032\u0037\u53f7","location":"114.257713,30.590611"},
+				
+				{"id":"522","province":"\u6e56\u5317\u7701","area":"\u5b5d\u611f\u5e02","shopname":"\u6e56\u5317\u5b5d\u611f\u5b87\u7530\u6c7d\u8f66\u9500\u552e\u670d\u52a1\u6709\u9650\u516c\u53f8","shopaddr":"\u000d\u000a\u5b5d\u611f\u5e02\u5b5d\u5357\u533a\u5b5d\u6b66\u5927\u9053\u7279\u0032\u53f7","location":"113.96719,30.88512"}];
+            result1=eval(result); 		
+            reg=eval(result); 
+            if(reg.length<1){
+                $("#store-list").children().remove();
+                $("#store-list").append("<div style='text-align: center;line-height: 50px;'>暂无搜索的网点</div>");
+                return false;
+            }
+            var storeList="";
+            $("#store-num").html(reg.length);
+            map.clearOverlays();
+            var pointsView = [];
+            for(var i=0;i<reg.length;i++){
+                var n=i+1;
+                var p= reg[i]['location'].split(',');
+                var point = new BMap.Point(p[0],p[1]);
+                pointsView.push(point);
+				
+                var content ="<p style='font-weight:600'>"+reg[i].shopname+"</p><p style='line-height: 20px;'>地址："+reg[i].shopaddr+"</p>";
+                var myIcon = new BMap.Icon("bd1.png", new BMap.Size(21, 33), {
+                    offset: new BMap.Size(25, 10), // 指定定位位置
+                });
+                var  marker = new BMap.Marker(point,{icon:myIcon});        // 创建标注
+                var label = new BMap.Label(n,{
+                    offset : new BMap.Size(0,3)
+                });
+                label.setStyle({
+                    width:'21px',background:'none',color:'#fff',border:'none',textAlign:'center'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
+                });
+                marker.setLabel(label);//显示地理名称 a
+                map.addOverlay(marker);
+                addClickHandler(content,marker);
+				
+                storeList+='<li onclick="to(this,'+i+','+p[0]+','+p[1]+',\''+reg[i].shopname+'\',\''+reg[i].shopaddr+'\')"><span class="location-num">'+n+'</span><div class="location-addr">'
+                +'<h3>'+reg[i].shopname+'</h3> <p class="addr-info">'+reg[i].shopaddr+'</p></div>'
+                +'</li>';
+            }
+            //让所有点在视野范围内
+            map.setViewport(pointsView);
+            $("#store-list").children().remove();
+            $("#store-list").append(storeList);
+       // }
+    }
+
+    var opts = {
+        width : 250,     // 信息窗口宽度
+        height: 50,     // 信息窗口高度
+        title : "" , // 信息窗口标题
+        enableMessage:true//设置允许信息窗发送短息
+    };
+
+
+    //点击将信息内容加入白标注中
+    function addClickHandler(content,marker){
+        marker.addEventListener("click",function(e){
+                    marker.setAnimation(null);
+                    openInfo(content,e);
+                }
+        );
+    }
+
+    function openInfo(content,e){
+        var p = e.target;
+        var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+        var infoWindow = new BMap.InfoWindow(content,opts);  // 创建信息窗口对象
+        map.openInfoWindow(infoWindow,point); //开启信息窗口
+    }
+
+    //移动到某一坐标点
+    function to(obj,i,x,y,shopname,shopaddr){
+        var allOverlay = map.getOverlays();
+        var last=allOverlay.length-1;
+        map.removeOverlay(allOverlay[last]);
+        $(obj).addClass("addMove");
+        $(obj).siblings().removeClass("addMove");
+        var point=new BMap.Point(x,y);
+        map.centerAndZoom(point,15);
+        var myIcon = new BMap.Icon("bd2.png", new BMap.Size(21, 33), {
+            offset: new BMap.Size(10, 25), // 指定定位位置
+        });
+        var  marker = new BMap.Marker(point,{icon:myIcon});        // 创建标注
+        var n=i+1;
+        var label = new BMap.Label(n,{
+            offset : new BMap.Size(0,3)
+        });
+        label.setStyle({
+            width:'21px',background:'none',color:'#fff',border:'none',textAlign:'center'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
+        });
+        marker.setLabel(label);//显示地理名称 a
+        map.addOverlay(marker);
+        var content ="<p style='font-weight:600'>"+shopname+"</p><p style='line-height: 20px;'>地址："+shopaddr+"</p>";
+        addClickHandler(content,marker);
+    }
+</script>

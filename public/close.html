@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关闭</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <img src="images/111timg.jpg" style="width: 100%" height="100%">
+        <h1 id="h1" style="text-align: center;margin-top: -700px;color: white; color: red;">5s后自动关闭</h1>
+        <a id="a1" href="javascript:;"
+            style="text-decoration: none;color: white;margin-left: 705px;font-size: 30px; color: red;">留在本页</a>
+
+
+        <script>
+          
+            function fun() {
+                var h1 = document.getElementById("h1");
+                var n = parseInt(h1.innerHTML);
+                n--;
+                if (n > 0) {
+                    h1.innerHTML = `${n}s后自动关闭`
+                } else {
+                    close();
+                }
+
+            }
+            var timer = setInterval(fun, 1000);
+            var a1 = document.getElementById("a1");
+            a1.onclick = function () {
+                clearInterval(timer);
+            }
+        </script>
+    </div>
+
+
+</body>
+
+</html>

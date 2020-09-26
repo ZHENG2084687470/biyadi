@@ -1,0 +1,66 @@
+.full{margin: 50px 20%; width: 850px; padding-left: -50px; }
+.yuegong .tools-mod {width: 600px;border-right: 1px solid #e6e6e6;background: #ffffff;float: left;position: relative;z-index: 2;border-top-left-radius: 5px;border-bottom-left-radius: 5px}
+.yuegong .result-mod { width: 508px; padding: 0 0 0 60px; float: left}
+.yuegong h4 { font-size: 20px; line-height: 20px; margin: 20px 0; text-align:center;}
+.tools-mod .xf-select { float: left; position:relative;}
+.tools-mod .tools-item {padding-left:125px;margin-bottom: 20px}
+.tools-mod .tools-item1 {margin-bottom: 16px}
+.tools-mod .tools-item2 {margin-bottom: 8px}
+.tools-mod .tools-item label {width: 70px; line-height: 42px; color: #999; font-size:14px;}
+.tools-mod .tools-item1 .xf-select .text {border: 1px solid #ccc}
+.tools-mod .tools-item2 p { line-height: 42px}
+.tools-mod .tools-item2 p strong { font-size: 20px; line-height: 20px; margin-right: 8px; font-weight: normal}
+.tools-mod .tools-item2 p span { color:white; font-size: 14px; margin-left: 5px}
+.tools-mod .tools-item2 p em { font-size: 16px; line-height: 16px; margin: 0 5px}
+.tools-mod .loan-item { padding-top: 13px}
+.tools-mod .loan-item p.gray { font-size: 14px; line-height: 14px}
+.tools-mod .loan-item .int-text { margin-left: 5px}
+.tools-mod .loan-item .int-text-mid { width: 120px}
+.tools-mod .loan-item .loan-style { margin-top: 20px}
+.tools-mod .loan-item .com-msg { margin-left: 9px}
+.tools-mod .tools-btn { position: absolute; top: 160px; left: 527px; width: 160px}
+.tools-mod .tools-btn .btn-b {display: block; margin-top: 11px; height: 50px; line-height: 50px !important; font-size: 22px; position: relative; z-index: 1; padding:0 27px; border-radius:3px; background: #707070; color: #ffffff; margin-right: 12px;}
+.xf-select { display: inline-block; *display: inline; *zoom:1;z-index: 9; cursor: pointer}
+.xf-select .text {position: relative;background: #ffffff;height: 34px;line-height: 34px;border: 1px solid #CCC;padding-right: 30px	}
+.xf-select .text,.xf-select li { padding-left: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis}
+.xf-select-max { font-size: 16px}
+.xf-select-min { font-size: 14px}
+.xf-select-max .text { width: 298px}
+.xf-select-min .text { width: 58px}
+.xf-select .text .icon-tip {width:17px; height:10px; line-height: 0;position: absolute;top: 14px;right: 8px;background: url(../images/ico_321qe.png)no-repeat;}
+.xf-select ul { display: none; position: absolute; left: 0; top: 35px; width: 100%; background: #ffffff; color: #333; border-top: 1px solid #CCC; border-bottom: 1px solid #CCC; overflow-y: auto; max-height: 210px; _height: 210px}
+.xf-select li { height: 35px; line-height: 35px; border-left: 1px solid #CCC; border-right: 1px solid #CCC}
+.xf-select li.on {color:#ffffff; background:#0aa1eb;}
+.xf-select .option-hv { background: #62ab00; color: #FFF}
+.xf-select .option-dis { color: #999; cursor: default}
+.xf-select-fo { position: relative}
+.xf-select-fo .text { border: 1px solid #62ab00}
+.xf-select-fo .text .icon-tip { background-position: -110px -160px}
+.xf-select-fo ul { display: block}
+.result-mod .charts-mod { margin: 40px 0 0; padding-left: 40px; overflow: hidden; zoom:1}
+.charts-mod .charts-box,.charts-mod .text-box { float: left}
+.charts-mod .charts-box { width: 220px; height: 220px}
+.charts-mod .text-box { margin: 30px 0 0; width: 240px}
+.charts-mod .text-box h3 { font-size: 20px}
+.charts-mod .text-box .price { font: 400 28px/28px "Arial"}
+.charts-mod .text-box em,.charts-mod .text-box .price { color: red; padding-left: 10px}
+.charts-mod .text-box li { margin: 5px 0 0; white-space: nowrap}
+.charts-mod .text-box li.on span { color: #c20000;}
+.charts-mod .lp-icons {	width: 17px;height: 14px;margin-right: 5px}
+.charts-mod .dot-1 { background-position: -85px -155px}
+.charts-mod .dot-2 { background-position: -35px -155px}
+.charts-mod .dot-3 { background-position: -60px -155px}
+.charts-mod .legend span { font-size: 14px}
+.charts-mod .legend em { color: #333; white-space: nowrap}
+.charts-mod .curr,.legend .curr em { color: #62ab00}
+.result-tips { color: red; margin-left: 10%; text-align: left; font-size: 14px}
+.yuegong .mod:after,.tools-mod .tools-item:after { clear: both; content: "."; display: block; font-size: 0; height: 0; line-height: 0; visibility: hidden}
+.yuegong .mod,.tools-mod .tools-item {*zoom:1;}
+.lp-icons { display: inline-block; font-size: 0; overflow: hidden; vertical-align: middle; background-image: url("../images/ico_viewindex.png"); background-repeat: no-repeat}
+.error-icon { background-position: -268px -120px; width: 14px; height: 14px; margin-right: 5px}
+.date-icon { position: absolute; right: 10px; top: 14px; background-position: -267px -85px; width: 16px; height: 13px; cursor: pointer}
+.err-tips-icon { background-position: -303px -85px; width: 32px; height: 32px; margin-right: 14px}
+.ok-tips-icon { background-position: -355px -85px; width: 32px; height: 32px; margin-right: 14px}
+.none{display:none;}
+.no_border{border:0;}
+.yuegong em{ font-style: normal;}

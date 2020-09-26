@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>登录/注册</title>
+  <link rel="stylesheet" href="css/denglu.css">
+  <script src="js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="jq22-container" style="padding-top:100px">
+		<div class="login-wrap">
+			<div class="login-html">
+				<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">登录</label>
+				<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">注册</label>
+				<div class="login-form">
+					<form>
+					<div class="sign-in-htm">
+						<div class="group">
+							<label for="user" class="label">用户名</label>
+							<input id="username" placeholder="请输入用户名"  type="text" class="input"
+							v-model="us"
+							@blur="zhumu"
+							>
+							<span class="ab" v-show="gun">{{user}}</span>
+						</div>
+						<div class="group">
+							<label for="pass" class="label">密码</label>
+							<input id="password" type="password" class="input" placeholder="请输入密码"
+							v-model="ps"
+							@blur="zhumui"
+							>
+							<span class="ab" v-show="xiaobin">{{userpassword}}</span>
+						</div>
+						<div class="group">
+							<input id="check" type="checkbox" class="check" checked>
+							<label for="check"><span class="icon"></span> 保持登录</label>
+						</div>						
+						<div class="group">
+							<input type="button" class="button" value="登录"
+							@click="linlin"
+							>
+						</div>
+						<div class="hr"></div>
+						<div class="foot-lnk">
+							<a href="#forgot">忘记密码?</a>
+						</div>
+					</div>
+					</form>
+					<form>
+					<div class="sign-up-htm">
+						<div class="group">
+							<label for="user" class="label">用户名</label>
+							<input id="users" type="text" class="input" placeholder="请输入用户名"
+							v-model="username"
+							@blur="checkUsername"
+							>
+							<span class="ab" v-show="ishow">{{ab}}</span>
+						</div>
+						<div class="group">
+							<label for="pass" class="label">密码</label>
+							<input id="passs" type="password" class="input" data-type="password" placeholder="请输入密码"
+							v-model="passworld"
+							@blur="checkPassword"
+							>
+							<span class="ab" v-show="ispas">{{abc}}</span>
+						</div>
+						<div class="group">
+							<label for="pass" class="label">重复密码</label>
+							<input id="passs" type="password" class="input" data-type="password" placeholder="再次确认密码"
+							v-model="confrim"
+							@blur="checkConpassword"
+							>
+							<span class="ab" v-show="ispass">{{abcd}}</span>
+						</div>
+						<div class="group">
+							<a href="register.html"><input type="submit" class="button" value="立即注册"
+							@click="app"
+							></a>
+						</div>
+						<div class="hr"></div>
+						<div class="foot-lnk">
+							<label for="tab-1" class="hah">已是成员?</label>
+						</div>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="js/axios.min.js"></script>
+<script>
+var vm=new Vue({
+  el:"#app",
+  data:{
+    // 登录部分
+			us:"",
+			ps:"",
+			gun:false,
+			xiaobin:false,
+			user:"",
+			userpassword:"",
+			// 注册部分
+			ishow:false,
+			ispas:false,
+			ispass:false,
+			//用户名初始值
+			username:'',
+			// 密码初始值
+			passworld:'',
+			// 确认密码初始值
+			confrim:'',
+			// 
+			ab:"",
+			// 
+			abc:"",
+			// 
+			abcd:"",
+
+  },
+  methods:{
+		// 登录部分
+		zhumu(){
+			//校验用户名是否合法,规则为: 任意的字母、数字及下划线的组合，长度为6~12位之间
+			  let usernameRegExp = /^[a-zA-Z0-9_]{6,12}$/;
+			  if(usernameRegExp.test(this.us)){
+				  this.gun=false;
+			  }else{
+				  this.user="用户名不合法";
+				  this.gun=true;
+			  }
+		},
+		zhumui(){
+			//校验用户名是否合法,规则为: 任意的字母、数字及下划线的组合，长度为6~12位之间
+			  let usernameRegExp = /^[a-zA-Z0-9_]{6,12}$/;
+			  if(usernameRegExp.test(this.ps)){
+				  this.xiaobin=false;
+			  }else{
+				  this.userpassword="密码不合法";
+				  this.xiaobin=true;
+			  }
+		},
+		linlin(){
+			if(this.us=="" && this.ps==""){
+				this.user="用户名不能为空";
+				this.gun=true;
+				this.userpassword="密码不能为空";
+				this.xiaobin=true;
+			};
+			axios.post("/libin", "username=" + this.us+ "&password=" + this.ps).then((res)=>{
+				if(res.data.code==0){
+					alert("用户名或密码错误");
+				}else{
+					alert("登录成功");
+					close();
+				}
+			});
+		},
+		//注册部分
+		 checkUsername(){
+		//校验用户名是否合法,规则为: 任意的字母、数字及下划线的组合，长度为6~12位之间
+			let unameregexp=/^[a-zA-Z0-9_]{6,12}$/;
+			if(unameregexp.test(this.username)){
+				this.ishow=false;
+				return true;
+			}else{
+				this.ab="用户名不合法";
+				this.ishow=true;
+			}
+			return false;
+		 },
+		checkPassword(){
+			//校验用户名是否合法,规则为: 任意的字母、数字及下划线的组合，长度为6~12位之间
+			let unameregexp=/^[a-zA-Z0-9_]{6,12}$/;
+			if(unameregexp.test(this.passworld)){
+				this.ispas=false;
+				return true;
+			}else{
+				this.ispas=true;
+				this.abc="密码不合法";
+			}
+			return false;
+		},
+		checkConpassword(){
+			if(this.passworld == this.confrim){
+				this.ispass=false;
+				return true;
+			}else{
+				this.ispass=true;
+				this.abcd="两次密码不一致";
+			}
+			return false;
+		},
+		app(){
+			if(this.username=="" && this.passworld=="" && this.confrim==""){
+				this.ab="用户名不能为空";
+				this.ishow=true;
+				this.ispas=true;
+				this.abc="密码不能为空";
+				this.ispass=true;
+				this.abcd="密码不能为空";
+			};
+			axios.post("/login",
+			 "username=" + this.username + "&password=" + this.passworld
+			).then((res)=>{
+				if(res.data.code==0){
+					 alert("注册提示", "用户名已经被占用");
+				}else{
+					alert("注册成功");
+				}
+			});
+		}
+	}
+
+});
+</script>
+</body>
+</html>

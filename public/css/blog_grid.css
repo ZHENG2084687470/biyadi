@@ -1,0 +1,99 @@
+  /*背景层*/
+        #popLayer,#popLayer_a,#popLayer_b, 
+		#popLayer_c,#popLayer_d,#popLayer_e,
+		#popLayer_f,#popLayer_g,#popLayer_h,#popLayer_i{
+            width: 100%;
+			height: 550%;
+			display: none;
+            background-color: #B3B3B3;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1100;
+            -moz-opacity: 0.3;
+            opacity:.50;
+            filter: alpha(opacity=80);/* 只支持IE6、7、8、9 */
+        }
+ 
+        /*弹出层*/
+        #popBox,#popBox_a,#popBox_b,#popBox_c,
+		#popBox_d,#popBox_e,#popBox_f,#popBox_g,
+		#popBox_h,#popBox_i{
+            display: none;
+            background-color: #FFFFFF;
+            z-index: 11;
+            width: 36rem;
+            height: 31.25rem;
+            position:fixed;
+            top:0;
+            right:0;
+            left:0;
+            bottom:0;
+            margin:auto;
+			z-index: 2000;
+			
+        }
+ 
+        #popBox .close,#popBox_a .close,#popBox_b .close,
+		#popBox_c .close,#popBox_d .close,#popBox_e .close,
+		#popBox_f .close,#popBox_g .close,#popBox_h .close,
+		#popBox_i .close{
+            text-align: right;
+            margin-right: 5px;
+            background-color: #F8F8F8;
+        }
+ 
+        /*关闭按钮*/
+        #popBox .close a ,#popBox_a .close a,#popBox_b .close a,
+		#popBox_c .close a,#popBox_d .close a,#popBox_e .close a,
+		#popBox_f .close a,#popBox_g .close a,#popBox_h .close a,
+		#popBox_i .close a{
+            text-decoration: none;
+            color: #2D2C3B;
+        }
+		/*图片大小*/
+		.img_01{
+			width: 21.875rem;
+			height: 14.5975rem;
+		}
+		/*弹出框图片大小*/
+		.img_a{
+			
+			width: 34rem;
+			height: 20rem;
+			margin-left: 0.85rem;
+			margin-top: 0.8rem;
+			border:0.5rem solid #DDD  ;
+		}
+.blogImg_a{
+	position: relative;
+	 margin-bottom: 15px; 
+	 overflow: hidden;}
+.blogImg_a img{-webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: all 0.5s ease 0s;
+    transition: all 0.5s ease 0s;
+	-webkit-transform: scale(1.0)!important;}
+.hover_tubiao{
+	width:21.875rem;
+	height: 14.5975rem;
+	background-color: #666666;
+	position: relative;
+	top: -14.5975rem;
+}
+.tanchu_p{
+	position: relative;
+	color: #000000;
+	padding: 0 1.25rem 0 1.25rem;
+	
+}
+.tanchu_h3{
+	margin-top: 20px;
+	margin-left: 1.25rem;
+	font-weight: 800;
+}
+.cha{
+	position: absolute;
+}
